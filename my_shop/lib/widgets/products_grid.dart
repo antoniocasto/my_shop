@@ -19,10 +19,21 @@ class ProductsGrid extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
-      itemBuilder: (ctx, index) => ProductItem(
-        id: products[index].id,
-        title: products[index].title,
-        imageUrl: products[index].imageUrl,
+      itemBuilder: (ctx, index) => ChangeNotifierProvider(
+        //context in create la metto diversa
+        create: (c) => products[index],
+        child: ProductItem(
+            //Non piu necessari.
+            /* 
+              Abbiamo deciso di creare un provider Product
+              per ogni product i della lista. Questo permette
+              di evitare il passaggio di parametri e di tenere i dati
+              ordinati avendo un provider per ogni singol Product.
+            */
+            // id: products[index].id,
+            // title: products[index].title,
+            // imageUrl: products[index].imageUrl,
+            ),
       ),
     );
   }
