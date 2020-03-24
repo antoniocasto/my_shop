@@ -17,7 +17,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    //Alternativamente ho usato il Consumer
+    final product = Provider.of<Product>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -34,14 +35,23 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite ? Icons.favorite : Icons.favorite_border,
+          leading: Consumer<Product>(
+            //Ho ridotto l'area di rebuilding in caso di cambiamento
+            //solo al widget del leading
+            //mi risparmio il rebuilding del resto dell'interfaccia
+            builder: (ctx, product, child) => IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
+              color: Theme.of(context).accentColor,
             ),
-            onPressed: () {
-              product.toggleFavoriteStatus();
-            },
-            color: Theme.of(context).accentColor,
+            //child e' un widget che posso usare dentro il builder
+            //(parametro child) e costituisce un elemento dell'interfaccia
+            //che non dovra' mai essere rebuildato dentro il Consumer
+            //child: Text('Never changes!'),
           ),
           trailing: IconButton(
             icon: Icon(
