@@ -46,8 +46,27 @@ class Products with ChangeNotifier {
     //lista originale in piu' parti) dei problemi
     //se ad esempio vorrei utilizzare la stessa lista di item in
     //parti diverse dell'app.
+
+    // if (_showFavoritedOnly) {
+    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
+    // }
+
     return [..._items];
   }
+
+  List<Product> get favoriteItems {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
+  }
+
+  // void showFavoritesOnly() {
+  //   _showFavoritedOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavoritedOnly = false;
+  //   notifyListeners();
+  // }
 
   void addProduct() {
     //_items.add(value);
