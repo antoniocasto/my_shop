@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/providers/cart.dart';
-import 'package:my_shop/screens/cart_screen.dart';
-import 'package:my_shop/widgets/badge.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/cart.dart';
+import '../screens/cart_screen.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/badge.dart';
 import '../widgets/products_grid.dart';
 
 enum FilterOptions {
@@ -66,6 +67,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       body: SafeArea(
         child: ProductsGrid(_showOnlyFavorites),
       ),
+      drawer: AppDrawer(),
     );
   }
 }
