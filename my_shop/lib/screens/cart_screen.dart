@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_shop/providers/cart.dart';
+import 'package:my_shop/providers/orders.dart';
 import 'package:provider/provider.dart';
 import '../widgets/cart_item_tile.dart';
 
@@ -43,7 +44,12 @@ class CartScreen extends StatelessWidget {
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
                     FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        //Place an order
+                        Provider.of<Orders>(context, listen: false).addOrder(
+                            cart.items.values.toList(), cart.totalAmount);
+                        cart.clear();
+                      },
                       child: Text('ORDER NOW'),
                       textColor: Theme.of(context).primaryColor,
                     ),
