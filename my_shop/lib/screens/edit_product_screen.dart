@@ -51,6 +51,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _saveForm() {
     //Submit the form here...
+    final isValid = _form.currentState
+        .validate(); //return true if no error occurs in validations
+    if (!isValid) {
+      return;
+    }
     _form.currentState.save();
   }
 
@@ -91,6 +96,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     imageUrl: _editedProduct.imageUrl,
                     id: null,
                   ),
+                  validator: (value) {
+                    //return null significa input corretto
+                    if (value.isEmpty) {
+                      return 'Please provide a value.';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(
@@ -110,6 +122,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     imageUrl: _editedProduct.imageUrl,
                     id: null,
                   ),
+                  validator: (value) {
+                    //return null significa input corretto
+                    if (value.isEmpty) {
+                      return 'Please provide a value.';
+                    }
+                    return null;
+                  },
                 ),
                 TextFormField(
                   decoration: InputDecoration(
