@@ -45,6 +45,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
       //per far aggiornare l'immagine presa dall'url
+      if ((!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
       setState(() {});
     }
   }
@@ -99,7 +106,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   validator: (value) {
                     //return null significa input corretto
                     if (value.isEmpty) {
-                      return 'Please provide a value.';
+                      return 'Please provide a title.';
                     }
                     return null;
                   },
@@ -125,7 +132,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   validator: (value) {
                     //return null significa input corretto
                     if (value.isEmpty) {
-                      return 'Please provide a value.';
+                      return 'Please provide a price.';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'Please enter a valid number.';
+                    }
+                    if (double.parse(value) <= 0) {
+                      return 'Please enter a number greater than zero.';
                     }
                     return null;
                   },
@@ -145,6 +158,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     imageUrl: _editedProduct.imageUrl,
                     id: null,
                   ),
+                  validator: (value) {
+                    //return null significa input corretto
+                    if (value.isEmpty) {
+                      return 'Please provide a description.';
+                    }
+                    if (value.length < 10) {
+                      return 'Should be at least 10 characters long.';
+                    }
+                    return null;
+                  },
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -186,6 +209,22 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           imageUrl: value,
                           id: null,
                         ),
+                        validator: (value) {
+                          //return null significa input corretto
+                          if (value.isEmpty) {
+                            return 'Please provide an image URL.';
+                          }
+                          if (!value.startsWith('http') ||
+                              !value.startsWith('https')) {
+                            return 'Please enter a valid URL.';
+                          }
+                          if (!value.endsWith('.png') &&
+                              !value.endsWith('.jpg') &&
+                              !value.endsWith('.jpeg')) {
+                            return 'Please enter a valid image URL.';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ],
